@@ -42,24 +42,18 @@
       start mining now!!
 
 
-## Download:
-
-Windows Client Download:
-_TODO_
-
-Windows CPU Miner Download:
-_TODO_
-
-Windows GPU Miner Download:
-_TODO_
-
-Source Code:
-https://github.com/bountycoin/BountyCoin
-
-
 ## Website:
 
 http://bountycoin.oicp.net
+
+
+## Download:
+
+Windows Binaries:
+https://bountycoin.codeplex.com/releases
+
+Source Code:
+https://github.com/bountycoin/BountyCoin
 
 
 ## Getting Started:
