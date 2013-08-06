@@ -74,6 +74,4 @@ https://github.com/bountycoin/BountyCoin
     rpcpassword=(password)
     rpcport=18512
     rpcconnect=127.0.0.1
-    addnode=198.211.17.160
-    addnode=173.254.207.107
-    addnode=118.250.247.107
+    addnode=bountycoin.oicp.net
