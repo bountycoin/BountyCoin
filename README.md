@@ -1,13 +1,13 @@
-[ANN][BOC]BountyCoin, PoW/PoS|CPU-Friendly|Slow start|Lots of Bounties
+[ANN][BOC]BountyCoin - PoW+PoS|CPU&GPU Friendly|Slow start|Lots of Bounties
 
 
 ## Features
 
-    - Proof of work/proof of stake
+    - Proof of work + Proof of stake
       with 2.5% POS interest
       
     - Modified Scrypt
-      very big N to be CPU friendly
+      carefully selected N to be both CPU & GPU friendly
       
     - Transacation Comment
       like CosmosCoin and FlorinCoin
@@ -17,10 +17,10 @@
       miners will still have incomes after all coin has been mined
       
     - 60 seconds block time
-	  minimize orphans
-	  
-	- Trade confirm: 3, Mine confirm: 30
-	  fast transcation
+      minimize orphans
+      
+    - Trade confirm: 3, Mine confirm: 30
+      fast transcation
       
     - 5 coins per block
       Day generation: 7200 coins or 1440 blocks, stable reward after 5 days of launch
@@ -59,12 +59,7 @@ https://github.com/bountycoin/BountyCoin
 
 ## Website:
 
-Still on bounty!
-
-
-## Blockchain Explorer:
-
-Still on bounty!
+http://bountycoin.oicp.net
 
 
 ## Getting Started:
@@ -73,7 +68,7 @@ Still on bounty!
 2. Put BountyCoin.conf (see sample file below) in your C:/Users/(computerusername)/Appdata/Roaming/BountyCoin
 3. Restart BountyCoin-qt, and you should connect and sync.
 4. For solo mining, launch CPU miner or GPU miner
-5. Solo example: cgminer-boc.exe --scrypt --thread-concurrency 1000 -g 1 -o localhost:18512 -O (yourusername):(password)
+5. Solo example: cgminer-mod.exe --scrypt --thread-concurrency 1000 -g 1 -o localhost:18512 -O (yourusername):(password)
 
 
 ## Sample BountyCoin.conf:

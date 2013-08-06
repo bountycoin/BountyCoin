@@ -122,24 +122,20 @@ static inline void xor_salsa8(uint32_t B[16], const uint32_t Bx[16])
 	B[15] += x15;
 }
 
-static inline void salsa(UINT X[32])
-{
-	xor_salsa8(X + 0, X + 16);
-	xor_salsa8(X + 16, X + 0);
-}
-
 static inline void scrypt_core(uint32_t X[32], uint32_t *lookup)
 {
 	for (int i = 0; i < SCRYPT_N_FACTOR; i++) {
 		memcpy(&lookup[i * 32], X, 128);
-		salsa(X);
+		xor_salsa8(X + 0, X + 16);
+		xor_salsa8(X + 16, X + 0);
 	}
 	for (int i = 0; i < SCRYPT_N_FACTOR; i++) {
-		j = 32 * (X[16] % SCRYPT_N_FACTOR);
-		for (k = 0; k < 32; k++){
-			X[k] ^= V[j + k];
+		int j = 32 * (X[16] % SCRYPT_N_FACTOR);
+		for (int k = 0; k < 32; k++){
+			X[k] ^= lookup[j + k];
 		}
-		salsa(X);
+		xor_salsa8(X + 0, X + 16);
+		xor_salsa8(X + 16, X + 0);
 	}
 }
 
