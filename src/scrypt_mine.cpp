@@ -122,20 +122,38 @@ static inline void xor_salsa8(uint32_t B[16], const uint32_t Bx[16])
 	B[15] += x15;
 }
 
-static inline void scrypt_core(uint32_t X[32], uint32_t *lookup)
+static inline void scrypt_core(uint32_t X[32], uint32_t *V)
 {
-	for (int i = 0; i < SCRYPT_N_FACTOR; i++) {
-		memcpy(&lookup[i * 32], X, 128);
-		xor_salsa8(X + 0, X + 16);
-		xor_salsa8(X + 16, X + 0);
+	uint32_t i, j, k;
+	uint64_t *p1, *p2;
+
+	p1 = (uint64_t *)X;
+
+	for (i = 0; i < SCRYPT_N_FACTOR; i += 2) {
+		memcpy(&V[i * 32], X, 128);
+		xor_salsa8(&X[0], &X[16]);
+		xor_salsa8(&X[16], &X[0]);
+
+		memcpy(&V[(i + 1) * 32], X, 128);
+		xor_salsa8(&X[0], &X[16]);
+		xor_salsa8(&X[16], &X[0]);
 	}
-	for (int i = 0; i < SCRYPT_N_FACTOR; i++) {
-		int j = 32 * (X[16] % SCRYPT_N_FACTOR);
-		for (int k = 0; k < 32; k++){
-			X[k] ^= lookup[j + k];
+	for (i = 0; i < SCRYPT_N_FACTOR; i += 2) {
+		j = X[16] % SCRYPT_N_FACTOR;
+		p2 = (uint64_t *)(&V[j * 32]);
+		for (k = 0; k < 16; k++){
+			p1[k] ^= p2[k];
 		}
-		xor_salsa8(X + 0, X + 16);
-		xor_salsa8(X + 16, X + 0);
+		xor_salsa8(&X[0], &X[16]);
+		xor_salsa8(&X[16], &X[0]);
+
+		j = X[16] % SCRYPT_N_FACTOR;
+		p2 = (uint64_t *)(&V[j * 32]);
+		for (k = 0; k < 16; k++){
+			p1[k] ^= p2[k];
+		}
+		xor_salsa8(&X[0], &X[16]);
+		xor_salsa8(&X[16], &X[0]);
 	}
 }
 
