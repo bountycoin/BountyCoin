@@ -18,6 +18,8 @@
 using namespace std;
 using namespace boost;
 
+const bool IsCalculatingGenesisBlockHash = false;
+
 //
 // Global state
 //
@@ -29,7 +31,6 @@ CCriticalSection cs_main;
 
 CTxMemPool mempool;
 unsigned int nTransactionsUpdated = 0;
-const bool IsCalculatingGenesisBlockHash = false;
 
 map<uint256, CBlockIndex*> mapBlockIndex;
 set<pair<COutPoint, unsigned int> > setStakeSeen;
@@ -947,7 +948,7 @@ uint256 WantedByOrphan(const CBlock* pblockOrphan)
 int64 GetProofOfWorkReward(int nHeight, int64 nFees, uint256 prevHash)
 {
 	int64 nSubsidy = MAX_MINT_PROOF_OF_WORK;
-	
+
 	if (nHeight == 1){
 		nSubsidy = MAX_MONEY * 0.005;
 	}
@@ -963,7 +964,7 @@ int64 GetProofOfWorkReward(int nHeight, int64 nFees, uint256 prevHash)
 	else if (nHeight < 5760){
 		nSubsidy = 4 * COIN;
 	}
-	
+
 	return nSubsidy + nFees;
 }
 
@@ -1906,7 +1907,7 @@ bool CBlock::SetBestChain(CTxDB& txdb, CBlockIndex* pindexNew)
 // ppcoin: total coin age spent in transaction, in the unit of coin-days.
 // Only those coins meeting minimum age requirement counts. As those
 // transactions not in main chain are not currently indexed so we
-// might not find out about their coin age. Older transactions are 
+// might not find out about their coin age. Older transactions are
 // guaranteed to be in main chain by sync-checkpoint. This rule is
 // introduced to help nodes establish a consistent view of the coin
 // age (trust score) of competing branches.
@@ -2578,7 +2579,7 @@ bool LoadBlockIndex(bool fAllowNew)
         block.nVersion = 1;
         block.nTime    = fTestNet ? nTestNetStartTime : nChainStartTime;;
         block.nBits    = bnProofOfWorkLimit.GetCompact();
-        block.nNonce   = !fTestNet ? 1322408 : 1602113;
+        block.nNonce   = !fTestNet ? 210960 : 1602113;
 
         if (IsCalculatingGenesisBlockHash && (block.GetHash() != hashGenesisBlock)) {
 			block.nNonce = 0;
