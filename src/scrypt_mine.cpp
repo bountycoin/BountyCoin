@@ -37,7 +37,7 @@
 #include "util.h"
 #include "net.h"
 
-#define SCRYPT_N_FACTOR 1024 * 16
+#define SCRYPT_N_FACTOR 1024 * 8
 #define SCRYPT_BUFFER_SIZE (128 * SCRYPT_N_FACTOR + 63)
 
 void* scrypt_buffer_alloc()
