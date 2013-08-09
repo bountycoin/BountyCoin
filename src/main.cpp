@@ -45,7 +45,7 @@ static CBigNum bnProofOfStakeLimitTestNet(~uint256(0) >> 20);
 unsigned int nStakeMinAge = 60 * 60 * 24 * 30; // minimum age for coin age
 unsigned int nStakeMaxAge = 60 * 60 * 24 * 90; // stake age of full weight
 unsigned int nStakeTargetSpacing = 1 * 60; // 60 seconds block spacing
-const int64 nChainStartTime = 1375812000; // 2013-08-06 18:00:00 GMT
+const int64 nChainStartTime = 1375963200; // 2013-08-08 12:00:00 GMT
 const int64 nTestNetStartTime = 1375552800; // 2013-08-03 18:00:00 GMT
 int nCoinbaseMaturity = 10; // mining need 30 confirm
 CBlockIndex* pindexGenesisBlock = NULL;
@@ -2578,7 +2578,7 @@ bool LoadBlockIndex(bool fAllowNew)
         block.nVersion = 1;
         block.nTime    = fTestNet ? nTestNetStartTime : nChainStartTime;;
         block.nBits    = bnProofOfWorkLimit.GetCompact();
-        block.nNonce   = !fTestNet ? 38478 : 1602113;
+        block.nNonce   = !fTestNet ? 1322408 : 1602113;
 
         if (IsCalculatingGenesisBlockHash && (block.GetHash() != hashGenesisBlock)) {
 			block.nNonce = 0;
@@ -2610,7 +2610,7 @@ bool LoadBlockIndex(bool fAllowNew)
         printf("block.nNonce = %u \n", block.nNonce);
         printf("block.nBits = %u \n", block.nBits);
 
-        assert(block.hashMerkleRoot == uint256("0x5e1ad302361b99214955fafcc77181c861b5ebd407ce5393c0455b57e8d897ed"));
+        assert(block.hashMerkleRoot == uint256("0xe30be18354a1f2d0275ee995fca280dcc64a14a382df6451689eed585d47885a"));
         block.print();
         assert(block.GetHash() == (!fTestNet ? hashGenesisBlock : hashGenesisBlockTestNet));
         assert(block.CheckBlock());

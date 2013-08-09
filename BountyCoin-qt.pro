@@ -243,8 +243,6 @@ SOURCES += src/qt/BountyCoin.cpp src/qt/BountyCoingui.cpp \
     src/qt/rpcconsole.cpp \
     src/noui.cpp \
     src/kernel.cpp \
-    src/scrypt-x86.S \
-    src/scrypt-x86_64.S \
     src/scrypt_mine.cpp \
     src/pbkdf2.cpp
 
