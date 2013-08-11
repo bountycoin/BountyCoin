@@ -15,16 +15,16 @@ CONFIG += no_include_pwd
 #LIBS += -lboost_system-mgw46-mt-sd-1_53 -lboost_filesystem-mgw46-mt-sd-1_53 -lboost_program_options-mgw46-mt-sd-1_53 -lboost_thread-mgw46-mt-sd-1_53
 
 
-BOOST_LIB_SUFFIX=-mgw46-mt-sd-1_54
+BOOST_LIB_SUFFIX=-mgw47-mt-sd-1_54
 
-BOOST_INCLUDE_PATH=C:\boost-1.54.0-mgw
-BOOST_LIB_PATH=C:\boost-1.54.0-mgw\stage\lib
-BDB_INCLUDE_PATH=C:\db-4.8.30.NC-mgw\build_unix
-BDB_LIB_PATH=C:\db-4.8.30.NC-mgw\build_unix
-OPENSSL_INCLUDE_PATH=C:\openssl-1.0.1c-mgw\include
-OPENSSL_LIB_PATH=C:\openssl-1.0.1c-mgw
-MINIUPNPC_INCLUDE_PATH=C:\miniupnpc-1.6-mgw
-MINIUPNPC_LIB_PATH=C:\miniupnpc-1.6-mgw
+BOOST_INCLUDE_PATH=C:\boost_1_54_0
+BOOST_LIB_PATH=C:\boost_1_54_0\stage\lib
+BDB_INCLUDE_PATH=C:\db-4.8.30.NC\build_unix
+BDB_LIB_PATH=C:\db-4.8.30.NC\build_unix
+OPENSSL_INCLUDE_PATH=C:\openssl-1.0.1e\include
+OPENSSL_LIB_PATH=C:\openssl-1.0.1e
+MINIUPNPC_INCLUDE_PATH=C:\miniupnpc-1.6
+MINIUPNPC_LIB_PATH=C:\miniupnpc-1.6
 
 OBJECTS_DIR = build
 MOC_DIR = build
@@ -128,8 +128,6 @@ HEADERS += src/qt/BountyCoingui.h \
     src/util.h \
     src/uint256.h \
     src/kernel.h \
-    src/scrypt_mine.h \
-    src/pbkdf2.h \
     src/serialize.h \
     src/strlcpy.h \
     src/main.h \
@@ -242,9 +240,7 @@ SOURCES += src/qt/BountyCoin.cpp src/qt/BountyCoingui.cpp \
     src/qt/qtipcserver.cpp \
     src/qt/rpcconsole.cpp \
     src/noui.cpp \
-    src/kernel.cpp \
-    src/scrypt_mine.cpp \
-    src/pbkdf2.cpp
+    src/kernel.cpp
 
 RESOURCES += \
     src/qt/BountyCoin.qrc

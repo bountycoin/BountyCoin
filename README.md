@@ -4,10 +4,10 @@
 ## Features
 
     - Proof of work + Proof of stake
-      with 2.5% POS interest
+      with 5% POS interest, keep your wallet open to claim this interest
       
-    - Modified Scrypt
-      carefully selected N to be both CPU & GPU friendly
+    - Good old SHA256d algorithm
+      compatiable with CPU, GPU, FPGA and ASIC
       
     - Transacation Comment
       like CosmosCoin and FlorinCoin
@@ -62,7 +62,7 @@ https://github.com/bountycoin/BountyCoin
 2. Put BountyCoin.conf (see sample file below) in your C:/Users/(computerusername)/Appdata/Roaming/BountyCoin
 3. Restart BountyCoin-qt, and you should connect and sync.
 4. For solo mining, launch CPU miner or GPU miner
-5. Solo example: cgminer-mod.exe --scrypt --thread-concurrency 1000 -g 1 -o localhost:18512 -O (yourusername):(password)
+5. Solo example: minerd.exe -a sha256d -o 127.0.0.1:18512 -O (username):(password)
 
 
 ## Sample BountyCoin.conf:
@@ -70,7 +70,7 @@ https://github.com/bountycoin/BountyCoin
     listen=1
     daemon=1
     server=1
-    rpcuser=(yourusername)
+    rpcuser=(username)
     rpcpassword=(password)
     rpcport=18512
     rpcconnect=127.0.0.1

@@ -9,7 +9,6 @@
 #include "sync.h"
 #include "net.h"
 #include "script.h"
-#include "scrypt_mine.h"
 
 #include <list>
 
@@ -34,7 +33,7 @@ static const int64 MIN_TX_FEE = 0.0001 * COIN;
 static const int64 MIN_RELAY_TX_FEE = MIN_TX_FEE;
 static const int64 MAX_MONEY = 1500000000 * COIN;//1.5 billion
 static const int64 MAX_MINT_PROOF_OF_WORK = 5 * COIN;	//5 Coin per block
-static const int64 MAX_MINT_PROOF_OF_STAKE = 0.025 * MAX_MINT_PROOF_OF_WORK;	//2.5% annual interest
+static const int64 MAX_MINT_PROOF_OF_STAKE = 0.05 * MAX_MINT_PROOF_OF_WORK;	//5% annual interest
 static const int64 MIN_TXOUT_AMOUNT = MIN_TX_FEE;
 static const unsigned int MAX_TX_COMMENT_LEN = 268; // BountyCoin: 256 bytes + 12 little extra
 
@@ -48,7 +47,7 @@ static const int fHaveUPnP = true;
 static const int fHaveUPnP = false;
 #endif
 
-static const uint256 hashGenesisBlockOfficial("0x00000d30d303ac748f2361c5a616a408c37e9d3bc2b353156c333f6acb42bf5e");
+static const uint256 hashGenesisBlockOfficial("0x000007536a152a745ddcd8120d2664c3fe2ee6f9d04fd97bc0612126c4b29548");
 static const uint256 hashGenesisBlockTestNet("0x00002dae5d76b63d87e9f0b31251fadc73cf105a729957d017fa5d0e805fc5f3");
 
 static const int64 nMaxClockDrift = 2 * 60 * 60;        // two hours
@@ -908,14 +907,7 @@ public:
 
     uint256 GetHash() const
     {
-        uint256 thash;
-        void * scratchbuff = scrypt_buffer_alloc();
-
-        scrypt_hash(CVOIDBEGIN(nVersion), sizeof(block_header), UINTBEGIN(thash), scratchbuff);
-
-        scrypt_buffer_free(scratchbuff);
-
-        return thash;
+        return SerializeHash(*this);
     }
 
     int64 GetBlockTime() const

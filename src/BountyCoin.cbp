@@ -37,23 +37,23 @@
 			<Add option="-DSTATICLIB" />
 			<Add option="-DUSE_UPNP=1" />
 			<Add option="-DUSE_IPV6=1" />
-			<Add directory="C:/boost-1.54.0-mgw" />
-			<Add directory="C:/db-4.8.30.NC-mgw/build_unix" />
-			<Add directory="C:/openssl-1.0.1c-mgw/include" />
-			<Add directory="C:/miniupnpc-1.6-mgw" />
+			<Add directory="C:/boost_1_54_0" />
+			<Add directory="C:/db-4.8.30.NC/build_unix" />
+			<Add directory="C:/openssl-1.0.1e/include" />
+			<Add directory="C:/miniupnpc-1.6" />
 			<Add directory="D:/MinGW/msys/1.0/home/BountyCoin/src" />
 		</Compiler>
 		<Linker>
 			<Add option="-Wl,--dynamicbase -Wl,--nxcompat -l kernel32 -l user32 -l gdi32 -l comdlg32 -l winspool -l winmm -l shell32 -l comctl32 -l ole32 -l oleaut32 -l uuid -l rpcrt4 -l advapi32 -l ws2_32 -l mswsock -l shlwapi" />
-			<Add library="C:\boost-1.54.0-mgw\stage\lib\libboost_system-mgw46-mt-sd-1_54.a" />
-			<Add library="C:\boost-1.54.0-mgw\stage\lib\libboost_filesystem-mgw46-mt-sd-1_54.a" />
-			<Add library="C:\boost-1.54.0-mgw\stage\lib\libboost_program_options-mgw46-mt-sd-1_54.a" />
-			<Add library="C:\boost-1.54.0-mgw\stage\lib\libboost_thread-mgw46-mt-sd-1_54.a" />
-			<Add library="C:\boost-1.54.0-mgw\stage\lib\libboost_chrono-mgw46-mt-sd-1_54.a" />
-			<Add library="C:\db-4.8.30.NC-mgw\build_unix\libdb_cxx.a" />
-			<Add library="C:\openssl-1.0.1c-mgw\libssl.a" />
-			<Add library="C:\openssl-1.0.1c-mgw\libcrypto.a" />
-			<Add library="C:\miniupnpc-1.6-mgw\libminiupnpc.a" />
+			<Add library="C:\boost_1_54_0\stage\lib\libboost_system-mgw47-mt-sd-1_54.a" />
+			<Add library="C:\boost_1_54_0\stage\lib\libboost_filesystem-mgw47-mt-sd-1_54.a" />
+			<Add library="C:\boost_1_54_0\stage\lib\libboost_program_options-mgw47-mt-sd-1_54.a" />
+			<Add library="C:\boost_1_54_0\stage\lib\libboost_thread-mgw47-mt-sd-1_54.a" />
+			<Add library="C:\boost_1_54_0\stage\lib\libboost_chrono-mgw47-mt-sd-1_54.a" />
+			<Add library="C:\db-4.8.30.NC\build_unix\libdb_cxx.a" />
+			<Add library="C:\openssl-1.0.1e\libssl.a" />
+			<Add library="C:\openssl-1.0.1e\libcrypto.a" />
+			<Add library="C:\miniupnpc-1.6\libminiupnpc.a" />
 			<Add library="C:\Dev\MinGW\lib\libgdi32.a" />
 			<Add library="C:\Dev\MinGW\lib\libws2_32.a" />
 			<Add library="C:\Dev\MinGW\lib\libiphlpapi.a" />
@@ -105,8 +105,6 @@
 		<Unit filename="netbase.cpp" />
 		<Unit filename="netbase.h" />
 		<Unit filename="noui.cpp" />
-		<Unit filename="pbkdf2.cpp" />
-		<Unit filename="pbkdf2.h" />
 		<Unit filename="protocol.cpp" />
 		<Unit filename="protocol.h" />
 		<Unit filename="rpcblockchain.cpp" />
@@ -117,8 +115,6 @@
 		<Unit filename="rpcwallet.cpp" />
 		<Unit filename="script.cpp" />
 		<Unit filename="script.h" />
-		<Unit filename="scrypt_mine.cpp" />
-		<Unit filename="scrypt_mine.h" />
 		<Unit filename="serialize.h" />
 		<Unit filename="strlcpy.h" />
 		<Unit filename="sync.cpp" />

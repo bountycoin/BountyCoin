@@ -96,10 +96,7 @@ OBJS= \
     obj/util.o \
     obj/wallet.o \
     obj/walletdb.o \
-    obj/noui.o \
-    obj/pbkdf2.o \
-    obj/kernel.o \
-    obj/scrypt_mine.o
+    obj/noui.o
 
 ifndef USE_UPNP
 	override USE_UPNP = -

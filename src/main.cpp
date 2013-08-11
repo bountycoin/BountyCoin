@@ -10,7 +10,6 @@
 #include "init.h"
 #include "ui_interface.h"
 #include "kernel.h"
-#include "scrypt_mine.h"
 #include <boost/algorithm/string/replace.hpp>
 #include <boost/filesystem.hpp>
 #include <boost/filesystem/fstream.hpp>
@@ -46,8 +45,8 @@ static CBigNum bnProofOfStakeLimitTestNet(~uint256(0) >> 20);
 unsigned int nStakeMinAge = 60 * 60 * 24 * 30; // minimum age for coin age
 unsigned int nStakeMaxAge = 60 * 60 * 24 * 90; // stake age of full weight
 unsigned int nStakeTargetSpacing = 1 * 60; // 60 seconds block spacing
-const int64 nChainStartTime = 1375963200; // 2013-08-08 12:00:00 GMT
-const int64 nTestNetStartTime = 1375552800; // 2013-08-03 18:00:00 GMT
+const int64 nChainStartTime = 1376215200; // 2013-08-10 8:00:00 GMT
+const int64 nTestNetStartTime = nChainStartTime; // 2013-08-03 18:00:00 GMT
 int nCoinbaseMaturity = 10; // mining need 30 confirm
 CBlockIndex* pindexGenesisBlock = NULL;
 int nBestHeight = -1;
@@ -2579,7 +2578,7 @@ bool LoadBlockIndex(bool fAllowNew)
         block.nVersion = 1;
         block.nTime    = fTestNet ? nTestNetStartTime : nChainStartTime;;
         block.nBits    = bnProofOfWorkLimit.GetCompact();
-        block.nNonce   = !fTestNet ? 210960 : 1602113;
+        block.nNonce   = 288155;
 
         if (IsCalculatingGenesisBlockHash && (block.GetHash() != hashGenesisBlock)) {
 			block.nNonce = 0;
@@ -2611,7 +2610,7 @@ bool LoadBlockIndex(bool fAllowNew)
         printf("block.nNonce = %u \n", block.nNonce);
         printf("block.nBits = %u \n", block.nBits);
 
-        assert(block.hashMerkleRoot == uint256("0xe30be18354a1f2d0275ee995fca280dcc64a14a382df6451689eed585d47885a"));
+        assert(block.hashMerkleRoot == uint256("0x32def6dbcaa96a706d817969391631a26872e70a2b22c0dd06004a88f9660f26"));
         block.print();
         assert(block.GetHash() == (!fTestNet ? hashGenesisBlock : hashGenesisBlockTestNet));
         assert(block.CheckBlock());
@@ -3909,6 +3908,39 @@ void SHA256Transform(void* pstate, void* pinput, const void* pinit)
         ((uint32_t*)pstate)[i] = ctx.h[i];
 }
 
+//
+// ScanHash scans nonces looking for a hash with at least some zero bits.
+// It operates on big endian data.  Caller does the byte reversing.
+// All input buffers are 16-byte aligned.  nNonce is usually preserved
+// between calls, but periodically or if nNonce is 0xffff0000 or above,
+// the block is rebuilt and nNonce starts over at zero.
+//
+unsigned int static ScanHash_CryptoPP(char* pmidstate, char* pdata, char* phash1, char* phash, unsigned int& nHashesDone)
+{
+    unsigned int& nNonce = *(unsigned int*)(pdata + 12);
+    for (;;)
+    {
+        // Crypto++ SHA-256
+        // Hash pdata using pmidstate as the starting state into
+        // preformatted buffer phash1, then hash phash1 into phash
+        nNonce++;
+        SHA256Transform(phash1, pdata, pmidstate);
+        SHA256Transform(phash, phash1, pSHA256InitState);
+
+        // Return the nonce if the hash has at least some zero bits,
+        // caller will check if it has enough to reach the target
+        if (((unsigned short*)phash)[14] == 0)
+            return nNonce;
+
+        // If nothing found after trying for a while, return -1
+        if ((nNonce & 0xffff) == 0)
+        {
+            nHashesDone = 0xffff+1;
+            return (unsigned int) -1;
+        }
+    }
+}
+
 // Some explaining would be appreciated
 class COrphan
 {
@@ -4355,8 +4387,6 @@ static int nLimitProcessors = -1;
 
 void BountyCoinMiner(CWallet *pwallet, bool fProofOfStake)
 {
-    void *scratchbuf = scrypt_buffer_alloc();
-
     printf("CPUMiner started for proof-of-%s\n", fProofOfStake? "stake" : "work");
     SetThreadPriority(THREAD_PRIORITY_LOWEST);
 
@@ -4439,39 +4469,28 @@ void BountyCoinMiner(CWallet *pwallet, bool fProofOfStake)
         //
         int64 nStart = GetTime();
         uint256 hashTarget = CBigNum().SetCompact(pblock->nBits).getuint256();
-
-        unsigned int max_nonce = 0xffff0000;
-        block_header res_header;
-        uint256 result;
-
+        uint256 hashbuf[2];
+        uint256& hash = *alignup<16>(hashbuf);
         loop
         {
             unsigned int nHashesDone = 0;
             unsigned int nNonceFound;
 
-            nNonceFound = scanhash_scrypt(
-                        (block_header *)&pblock->nVersion,
-                        scratchbuf,
-                        max_nonce,
-                        nHashesDone,
-                        UBEGIN(result),
-                        &res_header
-                        );
+            // Crypto++ SHA-256
+            nNonceFound = ScanHash_CryptoPP(pmidstate, pdata + 64, phash1,
+                                            (char*)&hash, nHashesDone);
 
             // Check if something found
             if (nNonceFound != (unsigned int) -1)
             {
-                if (result <= hashTarget)
+                for (unsigned int i = 0; i < sizeof(hash)/4; i++)
+                    ((unsigned int*)&hash)[i] = ByteReverse(((unsigned int*)&hash)[i]);
+
+                if (hash <= hashTarget)
                 {
                     // Found a solution
-                    pblock->nNonce = nNonceFound;
-                    assert(result == pblock->GetHash());
-                    if (!pblock->SignBlock(*pwalletMain))
-                    {
-                        //                        strMintWarning = strMintMessage;
-                        break;
-                    }
-                    strMintWarning = "";
+                    pblock->nNonce = ByteReverse(nNonceFound);
+                    assert(hash == pblock->GetHash());
 
                     SetThreadPriority(THREAD_PRIORITY_NORMAL);
                     CheckWork(pblock.get(), *pwalletMain, reservekey);
@@ -4535,8 +4554,6 @@ void BountyCoinMiner(CWallet *pwallet, bool fProofOfStake)
                 break;  // need to update coinbase timestamp
         }
     }
-
-    scrypt_buffer_free(scratchbuf);
 }
 
 void static ThreadBountyCoinMiner(void* parg)

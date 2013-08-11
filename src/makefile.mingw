@@ -5,24 +5,22 @@
 USE_UPNP:=1
 USE_IPV6:=1
 
-BOOST_SUFFIX?=-mgw46-mt-sd-1_54
-
 INCLUDEPATHS= \
- -I"/c/boost-1.54.0-mgw" \
- -I"/c/db-4.8.30.NC-mgw\build_unix" \
- -I"/c/openssl-1.0.1c-mgw\include"
+ -I"/c/boost_1_54_0" \
+ -I"/c/db-4.8.30.NC\build_unix" \
+ -I"/c/openssl-1.0.1e\include"
 
 LIBPATHS= \
- -L"/c/boost-1.54.0-mgw\stage\lib" \
- -L"/c/db-4.8.30.NC-mgw\build_unix" \
- -L"/c/openssl-1.0.1c-mgw"
+ -L"/c/boost_1_54_0\stage\lib" \
+ -L"/c/db-4.8.30.NC\build_unix" \
+ -L"/c/openssl-1.0.1e"
 
 LIBS= \
- -l boost_system-mgw46-mt-sd-1_54 \
- -l boost_filesystem-mgw46-mt-sd-1_54 \
- -l boost_program_options-mgw46-mt-sd-1_54 \
- -l boost_thread-mgw46-mt-sd-1_54 \
- -l boost_chrono-mgw46-mt-sd-1_54 \
+ -l boost_system-mgw47-mt-sd-1_54 \
+ -l boost_filesystem-mgw47-mt-sd-1_54 \
+ -l boost_program_options-mgw47-mt-sd-1_54 \
+ -l boost_thread-mgw47-mt-sd-1_54 \
+ -l boost_chrono-mgw47-mt-sd-1_54 \
  -l db_cxx \
  -l ssl \
  -l crypto
@@ -38,8 +36,8 @@ ifndef USE_UPNP
 	override USE_UPNP = -
 endif
 ifneq (${USE_UPNP}, -)
- INCLUDEPATHS += -I"/c/miniupnpc-1.6-mgw"
- LIBPATHS += -L"/c/\miniupnpc-1.6-mgw"
+ INCLUDEPATHS += -I"/c/miniupnpc-1.6"
+ LIBPATHS += -L"/c/\miniupnpc-1.6"
  LIBS += -l miniupnpc -l iphlpapi
  DEFS += -DSTATICLIB -DUSE_UPNP=$(USE_UPNP)
 endif
@@ -81,9 +79,7 @@ OBJS= \
     obj/wallet.o \
     obj/walletdb.o \
     obj/noui.o \
-    obj/kernel.o \
-    obj/pbkdf2.o \
-    obj/scrypt_mine.o
+    obj/kernel.o
 
 all: BountyCoind.exe
 
