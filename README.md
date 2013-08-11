@@ -1,5 +1,7 @@
 [ANN][BOC]BountyCoin - PoW+PoS|SHA256|Slow start|Lots of Bounties
 
+Current Version: 0.1.3
+
 
 ## Features
 
