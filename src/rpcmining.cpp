@@ -96,9 +96,6 @@ Value getnetworkhashps(const Array& params, bool fHelp)
 }
 
 
-
-
-
 Value getmininginfo(const Array& params, bool fHelp)
 {
     if (fHelp || params.size() != 0)
@@ -120,8 +117,6 @@ Value getmininginfo(const Array& params, bool fHelp)
     obj.push_back(Pair("testnet",       fTestNet));
     return obj;
 }
-
-
 
 
 Value getworkex(const Array& params, bool fHelp)
