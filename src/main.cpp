@@ -34,7 +34,7 @@ unsigned int nTransactionsUpdated = 0;
 map<uint256, CBlockIndex*> mapBlockIndex;
 set<pair<COutPoint, unsigned int> > setStakeSeen;
 uint256 hashGenesisBlock = hashGenesisBlockOfficial;
-static CBigNum bnProofOfWorkLimit(~uint256(0) >> 20);//start diff is zero, if modify 20 to 30, start diff is 0.25
+static CBigNum bnProofOfWorkLimit(~uint256(0) >> 30);//start diff is 0.25
 static CBigNum bnProofOfStakeLimit(~uint256(0) >> 24);
 static CBigNum bnProofOfStakeHardLimit(~uint256(0) >> 30); // disabled temporarily, will be used in the future to fix minimum PoS difficulty at 0.25
 
@@ -2578,7 +2578,7 @@ bool LoadBlockIndex(bool fAllowNew)
         block.nVersion = 1;
         block.nTime    = fTestNet ? nTestNetStartTime : nChainStartTime;;
         block.nBits    = bnProofOfWorkLimit.GetCompact();
-        block.nNonce   = 288155;
+        block.nNonce   = 2406681327;
 
         if (IsCalculatingGenesisBlockHash && (block.GetHash() != hashGenesisBlock)) {
 			block.nNonce = 0;
@@ -2594,9 +2594,9 @@ bool LoadBlockIndex(bool fAllowNew)
                     printf("NONCE WRAPPED, incrementing time");
                     ++block.nTime;
                 }
-				if (block.nNonce % 1000 == 0)
+				if (block.nNonce % 10000 == 0)
 				{
-					printf("nonce %08d: hash = %s \n", block.nNonce, block.GetHash().ToString().c_str());
+					printf("nonce %08u: hash = %s \n", block.nNonce, block.GetHash().ToString().c_str());
 				}
             }
         }

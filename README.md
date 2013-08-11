@@ -1,4 +1,4 @@
-[ANN][BOC]BountyCoin - PoW+PoS|CPU&GPU Friendly|Slow start|Lots of Bounties
+[ANN][BOC]BountyCoin - PoW+PoS|SHA256|Slow start|Lots of Bounties
 
 
 ## Features
