@@ -44,12 +44,12 @@ Current Version: 0.1.3
       start mining now!!
 
 
-## Website:
+## Website
 
 http://bountycoin.oicp.net
 
 
-## Download:
+## Download
 
 Windows Binaries:
 https://bountycoin.codeplex.com/releases
@@ -58,13 +58,22 @@ Source Code:
 https://github.com/bountycoin/BountyCoin
 
 
-## Getting Started:
+## Getting Started (Windows)
 
 1. Start up BountyCoin-qt, wait for it to load, then exit.
 2. Put BountyCoin.conf (see sample file below) in your C:/Users/(computerusername)/Appdata/Roaming/BountyCoin
 3. Restart BountyCoin-qt, and you should connect and sync.
 4. For solo mining, launch CPU miner or GPU miner
 5. Solo example: minerd.exe -a sha256d -o 127.0.0.1:18512 -O (username):(password)
+
+
+## Getting Started (Mac)
+
+1. Start up BountyCoin-qt, wait for it to load, then exit.
+2. Put BountyCoin.conf (see sample file below) in your ~/Library/Application Support/BountyCoin/
+3. Restart BountyCoin-qt, and you should connect and sync.
+4. For solo mining, launch CPU miner
+5. Solo example: ./minerd -a sha256d -o 127.0.0.1:18512 -O (username):(password)
 
 
 ## Sample BountyCoin.conf:
