@@ -86,3 +86,9 @@ https://github.com/bountycoin/BountyCoin
     rpcport=18512
     rpcconnect=127.0.0.1
     addnode=bountycoin.oicp.net
+    addnode=223.197.12.178
+    addnode=199.71.215.196
+    addnode=216.24.205.232
+    addnode=andarazoroflove.org
+    addnode=kadaplace.com
+    addnode=1.93.42.40
